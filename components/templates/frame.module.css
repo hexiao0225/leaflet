@@ -1,0 +1,17 @@
+/* Every template sizes itself in container-query units, so the same CSS drives
+   a full-screen published page and the editor's live preview panel. */
+
+.frame {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  min-height: 100dvh;
+}
+
+.preview {
+  height: 100%;
+  overflow: hidden;
+}

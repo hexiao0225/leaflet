@@ -1,0 +1,115 @@
+/* reader — near-black page, one narrow column, mono footnotes flush right.
+   Ref: andrewculp. Best for reviews and essays.
+   Sized in cqw so the editor preview is a true miniature. */
+
+.page {
+  --void: #0a0a0a;
+  --sheet: #0d0d0d;
+  --hairline: #262626;
+  --text: #e9e6df;
+  --dim: #7c786f;
+  --accent: #b99a5b;
+
+  flex: 1;
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-grotesk);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: clamp(0.75rem, 4cqw, 3.5rem) 1rem;
+}
+
+/* The bordered sheet floating on the void. */
+.sheet {
+  width: 100%;
+  max-width: 42rem;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  padding: clamp(1rem, 4cqw, 3rem) clamp(0.875rem, 4cqw, 3rem)
+    clamp(1.75rem, 8cqw, 6rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.95cqw, 0.75rem);
+  color: var(--dim);
+  margin-bottom: clamp(1.25rem, 4cqw, 2.5rem);
+  text-transform: lowercase;
+}
+
+.folio {
+  color: var(--accent);
+}
+
+.column {
+  /* The readable measure is the template. */
+  max-width: 46ch;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 4cqw, 2.375rem);
+  line-height: 1.15;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+
+.meta {
+  font-size: clamp(0.6rem, 1.2cqw, 0.9375rem);
+  color: var(--dim);
+  margin-top: clamp(1.25rem, 4cqw, 2.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.figure {
+  margin: 0 0 1.75rem;
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);
+}
+
+.body {
+  font-size: clamp(0.7rem, 1.5cqw, 1.1875rem);
+  line-height: 1.5;
+  letter-spacing: -0.003em;
+  color: var(--text);
+}
+
+/* Continuous setting: indented first lines, no paragraph gaps. */
+.body p + p {
+  text-indent: 1.5em;
+}
+
+.spacer {
+  flex: 1;
+  min-height: 2rem;
+}
+
+.footnotes {
+  font-family: var(--font-mono);
+  font-size: clamp(0.45rem, 0.85cqw, 0.6875rem);
+  line-height: 1.9;
+  color: var(--dim);
+  text-align: right;
+  max-width: 46ch;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.footnotes span {
+  color: var(--accent);
+  margin-right: 0.75em;
+}

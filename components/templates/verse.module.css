@@ -1,0 +1,89 @@
+/* verse — poster energy, oversized roman/italic title, exact line breaks.
+   Refs: sachakalfon, becoming.press. Best for poetry.
+   Sized in cqw so the editor preview is a true miniature. */
+
+.page {
+  --paper: #fbfbf9;
+  --ink: #0b0b0b;
+  --accent: #1c39ff;
+
+  flex: 1;
+  background: var(--paper);
+  color: var(--ink);
+  padding: clamp(1.5rem, 8cqw, 6rem) clamp(1rem, 5cqw, 3rem)
+    clamp(2rem, 10cqw, 7rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.stamp {
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.85cqw, 0.6875rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(1rem, 4cqw, 2.5rem);
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 13cqw, 9.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-align: center;
+  max-width: 16ch;
+  text-wrap: balance;
+  margin-bottom: clamp(0.5rem, 2cqw, 1rem);
+}
+
+/* Roman first half, italic second half — the becoming.press move. */
+.italic {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.dash {
+  width: clamp(2rem, 8cqw, 5rem);
+  border: 0;
+  border-top: 2px solid var(--accent);
+  margin: clamp(1.5rem, 7cqw, 4.5rem) 0 clamp(1.5rem, 7cqw, 4rem);
+}
+
+.figure {
+  margin: 0 0 clamp(1.5rem, 6cqw, 4rem);
+  max-width: 34rem;
+  width: 100%;
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+}
+
+/* Line breaks are the poem. Preserve them exactly. */
+.body {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.8rem, 2.2cqw, 1.75rem);
+  line-height: 1.65;
+  letter-spacing: 0.002em;
+  white-space: pre-wrap;
+  text-align: center;
+  max-width: 44ch;
+  width: 100%;
+}
+
+.colophon {
+  font-family: var(--font-mono);
+  font-size: clamp(0.45rem, 0.85cqw, 0.6875rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.45;
+  margin-top: clamp(2rem, 9cqw, 6rem);
+  text-align: center;
+}

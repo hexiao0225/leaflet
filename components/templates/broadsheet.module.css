@@ -1,0 +1,97 @@
+/* broadsheet — cream page, Instrument Serif set edge to edge, mono colophon.
+   Refs: madonnapopstar12, sam-evers. Best for fiction and review.
+   Sized in cqw so the editor preview is a true miniature. */
+
+.page {
+  --cream: #f4f1e8;
+  --ink: #100f0c;
+  --accent: #b3311f;
+
+  flex: 1;
+  background: var(--cream);
+  color: var(--ink);
+  padding: clamp(2rem, 5cqw, 4.5rem) clamp(1.5rem, 4cqw, 3.5rem);
+  padding-bottom: clamp(7rem, 12cqw, 9rem);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.masthead {
+  max-width: 68rem;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.85cqw, 0.6875rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(1.5rem, 4cqw, 2.75rem);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 11cqw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--ink);
+  margin: clamp(1.5rem, 5cqw, 3.25rem) 0 clamp(1.5rem, 5cqw, 3.5rem);
+}
+
+.figure {
+  margin: 0 0 clamp(1.5rem, 5cqw, 3.5rem);
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) contrast(1.05);
+}
+
+/* Edge to edge: no narrow measure. This is the whole point of the template. */
+.body {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 2.55cqw, 2.125rem);
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  hyphens: auto;
+}
+
+.body p + p {
+  margin-top: 1.35em;
+}
+
+.body p:first-of-type::first-letter {
+  color: var(--accent);
+}
+
+.colophon {
+  position: absolute;
+  left: clamp(1.5rem, 4cqw, 3.5rem);
+  right: clamp(1.5rem, 4cqw, 3.5rem);
+  bottom: clamp(1.75rem, 4cqw, 2.75rem);
+
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  border-top: 1px solid var(--ink);
+  padding-top: 0.875rem;
+
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, 0.85cqw, 0.6875rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.colophonMark {
+  color: var(--accent);
+}

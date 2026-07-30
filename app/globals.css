@@ -1,0 +1,71 @@
+/* Leaflet — the app chrome. The templates bring their own type systems. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:root {
+  /* Chrome palette: warm paper, ink, and one red. */
+  --paper: #f7f5f0;
+  --ink: #16150f;
+  --ink-soft: #6d6a60;
+  --rule: #d9d5c9;
+  --accent: #b3311f;
+
+  --font-display: ui-serif, Georgia, serif;
+  --font-grotesk: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-grotesk);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
