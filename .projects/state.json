@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "providers": {
+    "auth0": {
+      "name": "Auth0"
+    },
+    "neon": {
+      "name": "Neon"
+    },
+    "vercel": {
+      "name": "Vercel"
+    }
+  },
+  "resources": {
+    "auth0-client": {
+      "name": "auth0-client",
+      "providerName": "Auth0",
+      "serviceId": "client"
+    },
+    "auth0-plan": {
+      "name": "auth0-plan",
+      "providerName": "Auth0",
+      "serviceId": "free"
+    },
+    "neon-plan": {
+      "name": "neon-plan",
+      "providerName": "Neon",
+      "serviceId": "free"
+    },
+    "neon-postgres": {
+      "name": "neon-postgres",
+      "providerName": "Neon",
+      "serviceId": "postgres"
+    },
+    "vercel-plan": {
+      "name": "vercel-plan",
+      "providerName": "Vercel",
+      "serviceId": "hobby"
+    },
+    "vercel-project": {
+      "name": "vercel-project",
+      "providerName": "Vercel",
+      "serviceId": "project"
+    }
+  },
+  "environments": {
+    "default": {
+      "output": ".env",
+      "resources": [
+        {
+          "resourceName": "auth0-client"
+        },
+        {
+          "resourceName": "auth0-plan"
+        },
+        {
+          "resourceName": "neon-plan"
+        },
+        {
+          "resourceName": "neon-postgres"
+        },
+        {
+          "resourceName": "vercel-plan"
+        },
+        {
+          "resourceName": "vercel-project"
+        }
+      ],
+      "variables": [
+        {
+          "variableName": "app-base-url",
+          "envKey": "APP_BASE_URL"
+        },
+        {
+          "variableName": "auth0-secret",
+          "envKey": "AUTH0_SECRET"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "app-base-url": {
+      "name": "app-base-url",
+      "backendId": "fprjvar_61V8P6BvRGMYGuIHu16PFGroLYSQZJiZ527EifSHYU6S"
+    },
+    "auth0-secret": {
+      "name": "auth0-secret",
+      "backendId": "fprjvar_61V8P3RpTIoV77WEL16PFGroLYSQZJiZ527EifSHY5VQ"
+    }
+  }
+}

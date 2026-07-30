@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "project": {
+    "catalog": "prod",
+    "initializedAt": "2026-07-30T20:56:45.205Z",
+    "merchantDisplayName": "Ohzero-design",
+    "merchantId": "acct_1L6173FpUhMzE096",
+    "projectId": "project_61V8OxoBh2LNuC2oR16PFGroLYSQZJiZ527EifSHY7Yu",
+    "projectName": "leaflet"
+  },
+  "providers": {
+    "auth0": {
+      "accountRequestId": "facctrq_61V8Oyjvp3xRAxvxt16PFGroLYSQZJiZ527EifSHYMmu",
+      "configuration": {
+        "locality": "us",
+        "naming_prefix": "haiku"
+      },
+      "linkedAt": "2026-07-30T20:57:46.500Z",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-30T20:57:46.500Z",
+      "status": "complete"
+    },
+    "neon": {
+      "accountRequestId": "facctrq_61V8OzI8r4tisQ2kq16PFGroLYSQZJiZ527EifSHY4Ce",
+      "configuration": {},
+      "linkedAt": "2026-07-30T20:58:47.752Z",
+      "providerId": "prvdr_61UH8uNXFdoJUJOtT54AC",
+      "providerName": "Neon",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-30T20:58:17.042Z",
+      "status": "complete"
+    },
+    "vercel": {
+      "accountRequestId": "facctrq_61V8P0S8GwHDboihv16PFGroLYSQZJiZ527EifSHYG2K",
+      "configuration": {},
+      "linkedAt": "2026-07-30T20:59:31.119Z",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-30T20:59:31.119Z",
+      "status": "complete"
+    }
+  },
+  "resources": {
+    "auth0-client": {
+      "configuration": {
+        "name": "leaflet",
+        "app_type": "regular_web",
+        "callbacks": [
+          "https://leaflet-puce.vercel.app/auth/callback",
+          "http://localhost:3000/auth/callback"
+        ],
+        "allowed_logout_urls": [
+          "https://leaflet-puce.vercel.app",
+          "http://localhost:3000"
+        ],
+        "web_origins": [
+          "https://leaflet-puce.vercel.app",
+          "http://localhost:3000"
+        ]
+      },
+      "createdAt": "2026-07-30T20:57:54.884Z",
+      "lastRevealedAt": "2026-07-30T21:06:57.736Z",
+      "lastStatus": "complete",
+      "name": "auth0-client",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "resourceId": "fres_61V8Oyt8uFRuK4VE716PFGroLYSQZJiZ527EifSHYHzU",
+      "serviceId": "client"
+    },
+    "auth0-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-30T20:57:50.271Z",
+      "lastRevealedAt": "2026-07-30T20:57:50.522Z",
+      "lastStatus": "complete",
+      "name": "auth0-plan",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "resourceId": "fres_61V8OypFDI7Ximu2H16PFGroLYSQZJiZ527EifSHYJ96",
+      "serviceId": "free"
+    },
+    "neon-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-30T20:58:49.178Z",
+      "lastRevealedAt": "2026-07-30T20:58:49.513Z",
+      "lastStatus": "complete",
+      "name": "neon-plan",
+      "providerId": "prvdr_61UH8uNXFdoJUJOtT54AC",
+      "providerName": "Neon",
+      "resourceId": "fres_61V8OzoZzoyapcx7b16PFGroLYSQZJiZ527EifSHY5V2",
+      "serviceId": "free"
+    },
+    "neon-postgres": {
+      "configuration": {},
+      "createdAt": "2026-07-30T20:58:51.654Z",
+      "lastRevealedAt": "2026-07-30T20:58:52.134Z",
+      "lastStatus": "complete",
+      "name": "neon-postgres",
+      "providerId": "prvdr_61UH8uNXFdoJUJOtT54AC",
+      "providerName": "Neon",
+      "resourceId": "fres_61V8OzqxRuIQT81hj16PFGroLYSQZJiZ527EifSHY72u",
+      "serviceId": "postgres"
+    },
+    "vercel-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-30T20:59:33.223Z",
+      "lastRevealedAt": "2026-07-30T20:59:33.736Z",
+      "lastStatus": "complete",
+      "name": "vercel-plan",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "resourceId": "fres_61V8P0VH4xkA6ZIfD16PFGroLYSQZJiZ527EifSHYVNo",
+      "serviceId": "hobby"
+    },
+    "vercel-project": {
+      "configuration": {
+        "name": "leaflet"
+      },
+      "createdAt": "2026-07-30T20:59:36.241Z",
+      "lastRevealedAt": "2026-07-30T20:59:36.710Z",
+      "lastStatus": "complete",
+      "name": "vercel-project",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "resourceId": "fres_61V8P0YvLHQqwM9cx16PFGroLYSQZJiZ527EifSHYUtU",
+      "serviceId": "project"
+    }
+  },
+  "managedProjectVariableEnvKeys": {
+    ".env": [
+      "APP_BASE_URL",
+      "AUTH0_SECRET"
+    ]
+  }
+}
