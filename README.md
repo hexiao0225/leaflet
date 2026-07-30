@@ -9,8 +9,10 @@ Built with Stripe Projects (Auth0 + Neon + Vercel) on Next.js.
 
 [![Leaflet landing page](docs/landing.png)](https://leaflet-puce.vercel.app)
 
-Three pieces are already published, one per template:
+### Selected work
 
+- [Ray Ray](https://leaflet-puce.vercel.app/p/ray-ray-6dh94) — review, **reader**
+- [Early Summer](https://leaflet-puce.vercel.app/p/early-summer-kjwf4) — poem, **reader**
 - [Inventory of a Borrowed Room](https://leaflet-puce.vercel.app/p/inventory-of-a-borrowed-room) — poem, **verse**
 - [The Cartographer's Daughter](https://leaflet-puce.vercel.app/p/the-cartographers-daughter) — fiction, **broadsheet**
 - [On Rereading a Book You Have Already Underlined](https://leaflet-puce.vercel.app/p/on-rereading-a-book-you-have-already-underlined) — review, **reader**

@@ -51,6 +51,19 @@ export default async function Landing() {
         <p className={styles.railNote}>
           One piece of writing, one dedicated URL.
         </p>
+
+        <p className={styles.credit}>
+          Made by{" "}
+          <a
+            className={styles.creditLink}
+            href="https://www.xiaohe.studio/about"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Xiao He
+          </a>
+          , artist based in San Francisco.
+        </p>
       </div>
 
       <div className={styles.stage}>

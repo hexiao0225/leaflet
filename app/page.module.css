@@ -81,11 +81,33 @@
   max-width: 11rem;
 }
 
+.credit {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.32;
+  max-width: 11rem;
+  /* Sits at the foot of the rail, like a colophon. */
+  margin-top: auto;
+  padding-bottom: 1.6rem;
+}
+
+.creditLink {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: opacity 0.12s ease;
+}
+
+.creditLink:hover {
+  opacity: 0.55;
+}
+
 @media (max-width: 60rem) {
   .rail {
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 1.5rem;
   }
 
@@ -96,6 +118,14 @@
 
   .railNote {
     display: none;
+  }
+
+  /* Keep the credit, but give it its own line rather than the rail's foot. */
+  .credit {
+    margin-top: 0;
+    padding-bottom: 0;
+    flex-basis: 100%;
+    max-width: none;
   }
 }
 
