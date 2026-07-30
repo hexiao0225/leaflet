@@ -35,6 +35,27 @@ export async function getPieceBySlug(slug: string): Promise<Piece | null> {
   return rows[0] ?? null;
 }
 
+export async function listRecentPieces(limit = 6): Promise<Piece[]> {
+  const sql = connection();
+  return (await sql`
+    select * from pieces order by created_at desc limit ${limit}
+  `) as Piece[];
+}
+
+/**
+ * The piece shown on the landing page's screen. Prefers a light template —
+ * a dark page behind the glass loses the lit-monitor effect.
+ */
+export async function getFeaturedPiece(): Promise<Piece | null> {
+  const sql = connection();
+  const rows = (await sql`
+    select * from pieces
+    order by (template in ('verse', 'broadsheet')) desc, created_at desc
+    limit 1
+  `) as Piece[];
+  return rows[0] ?? null;
+}
+
 export async function listPiecesByUser(userId: string): Promise<Piece[]> {
   const sql = connection();
   return (await sql`

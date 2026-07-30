@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAuthor, isAuthConfigured } from "@/lib/auth0";
 import Editor from "./Editor";
-import styles from "../page.module.css";
+import styles from "../shell.module.css";
 
 export const dynamic = "force-dynamic";
 
