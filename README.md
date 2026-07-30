@@ -5,9 +5,12 @@ typography, Cargo-style. **One piece of writing → one dedicated URL.**
 
 Built with Stripe Projects (Auth0 + Neon + Vercel) on Next.js.
 
-- **Live:** https://leaflet-puce.vercel.app
+### → [**leaflet-puce.vercel.app**](https://leaflet-puce.vercel.app)
+
 - **Repo:** https://github.com/hexiao0225/leaflet
 - **Demo login:** `hello@leaflet.press` / `LeafletDemo2026!`
+
+[![Leaflet landing page](docs/landing.png)](https://leaflet-puce.vercel.app)
 
 Three pieces are already published, one per template:
 
@@ -23,6 +26,31 @@ Three pieces are already published, one per template:
 2. `/write` — paste a poem, pick **Verse**, watch the live preview redraw.
 3. **Publish** → congrats screen with the live URL.
 4. Open `/p/<slug>` — the piece, full screen, nothing else on the page.
+
+### The loop, in screenshots
+
+**Write.** The preview on the right is the real template component, not a
+mock-up. Switching the radio redraws it instantly.
+
+![Editor with the verse template selected](docs/editor-verse.png)
+
+Same piece, `reader` template, with the optional image URL filled in:
+
+![Editor with the reader template and an image](docs/editor-reader-image.png)
+
+**Publish.** The slug is generated from the title plus a short random suffix,
+so two pieces can share a title.
+
+![Congrats screen showing the live URL](docs/published-early-summer.png)
+
+**The page.** Public, no auth, nothing on it but the piece.
+
+![A published piece in the reader template](docs/published-ray-ray.png)
+
+Another one, in the editor — `reader` handles a long poem as continuous
+setting with indented first lines:
+
+![Editor showing a long poem in the reader template](docs/editor-early-summer.png)
 
 ## What it is
 
@@ -54,6 +82,17 @@ monospace-metadata voice.
 
 References: madonnapopstar12 and sam-evers (broadsheet), andrewculp (reader),
 sachakalfon and becoming.press (verse).
+
+Two of the sites the type system was drawn from — the metadata row under the
+image on [sam-evers.com](https://sam-evers.com) became broadsheet's colophon,
+and [andrescasas.cl](https://andrescasas.cl) set the mono-caption voice:
+
+| sam-evers.com | andrescasas.cl |
+|---|---|
+| ![sam-evers.com](docs/ref-sam-evers.png) | ![andrescasas.cl](docs/ref-andrescasas.png) |
+
+*Reference screenshots, credited to their authors — included as the moodboard
+this design was built against, not as anything belonging to this project.*
 
 The editor, with the live preview showing each template in turn:
 
@@ -193,6 +232,11 @@ vercel deploy --prod --token "$VERCEL_TOKEN"
 
 Providers available include Vercel, Auth0, Neon, Agentmail, BrowserBase,
 ElevenLabs. For anything not listed, use its API directly and set env vars.
+
+Provisioning Neon, straight after Auth0 wrote its three credentials into `.env`
+and the vault:
+
+![stripe projects add neon/postgres](docs/stripe-projects-neon.png)
 
 ### Plumbing notes
 
