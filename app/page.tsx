@@ -2,10 +2,13 @@ import Link from "next/link";
 import Workstation from "@/components/Workstation";
 import PieceView from "@/components/templates";
 import { getAuthor, isAuthConfigured } from "@/lib/auth0";
-import { getFeaturedPiece, listPiecesBySlugs } from "@/lib/db";
+import { getFeaturedPiece, getPieceBySlug, listPiecesBySlugs } from "@/lib/db";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
+
+/** Shown on the monitor. Falls back to a light-template piece if it's gone. */
+const FEATURED_SLUG = "flying-kite-77vnv";
 
 /** Curated, in menu order. Titles are read from the database. */
 const SELECTED_WORK = [
@@ -19,7 +22,9 @@ export default async function Landing() {
   const author = await getAuthor();
 
   // The screen shows a real published piece, rendered by the real template.
-  const featured = await getFeaturedPiece().catch(() => null);
+  const featured =
+    (await getPieceBySlug(FEATURED_SLUG).catch(() => null)) ??
+    (await getFeaturedPiece().catch(() => null));
   const selected = await listPiecesBySlugs(SELECTED_WORK).catch(() => []);
 
   return (

@@ -11,6 +11,7 @@ Built with Stripe Projects (Auth0 + Neon + Vercel) on Next.js.
 
 ### Selected work
 
+- [Flying Kite](https://leaflet-puce.vercel.app/p/flying-kite-77vnv) — fiction, **broadsheet**
 - [Ray Ray](https://leaflet-puce.vercel.app/p/ray-ray-6dh94) — review, **reader**
 - [Early Summer](https://leaflet-puce.vercel.app/p/early-summer-kjwf4) — poem, **reader**
 - [Inventory of a Borrowed Room](https://leaflet-puce.vercel.app/p/inventory-of-a-borrowed-room) — poem, **verse**
