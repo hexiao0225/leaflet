@@ -211,7 +211,131 @@ the `VERCEL_TOKEN` that Stripe Projects wrote.
 
 ---
 
-## Agent prompt used to build the app
+## How this was built
+
+Leaflet was built by an agent (Claude Code) driven by the prompt sequence below.
+Each prompt is given verbatim or lightly condensed, with what it actually
+produced. This is the honest record, including the parts that went sideways.
+
+### 1 — Kick off
+
+> `new hackathon project in a new git repo:` *(followed by the full runbook —
+> scope decision, MVP, data model, template specs, time budget, CLI
+> reference)*. Attached: three reference screenshots — madonnapopstar12,
+> becoming.press, andrewculp.
+
+Produced: blank git repo + first commit *before any code* (a rule requirement),
+Next.js scaffold, the three templates, editor, publish action, public route.
+Live on Vercel roughly 30 minutes in, before any credentials existed — the app
+was written to boot without them and say what was missing.
+
+The three screenshots mapped one-to-one onto the three templates, which is why
+the templates read as a family rather than three unrelated designs.
+
+### 2 — Orientation
+
+> `which git repo and local folder you are on? and what are all the commands i
+> need to run`
+
+Worth doing early. The answer surfaced that the Stripe CLI on the machine was
+v1.25 with **API keys expired 2025-06-27**, which is why
+`stripe plugin install projects` was 401-ing. Every `stripe` subcommand
+authenticates before doing anything, so `stripe login` had to come first.
+
+### 3 — Relocate
+
+> `actually I want to put the project under my code folder. can you do the
+> moving?`
+
+Moved `~/projects/leaflet` → `~/code/leaflet`. Verified git remote, Vercel
+link, and a clean rebuild from the new path all survived.
+
+### 4 — Provision
+
+> *(pasted the `api_key_expired` error)* … then
+> `i have installed all those needed stripe projects, lets continue building
+> out the whole product`
+
+This was the longest phase, and almost none of it was app code — see
+[Four things the CLI does not do for you](#four-things-the-cli-does-not-do-for-you).
+Provisioning three services is not the same as having a working app.
+
+### 5 — Ship
+
+> `this is great! please commit all the code and merge to main. We will then go
+> into the refine phase`
+
+Already done — work was merged to `main` continuously rather than accumulating
+on a branch.
+
+### 6 — Rebrand
+
+> `for the actual site leaflet, i want a design rebrand. Let's use this style:
+> [willhandley.net screenshot] for the landing page. you can replace the
+> content from the computer screen with actual content`
+
+The reference is a photograph of an LCD on a rack server. Rather than reuse
+someone else's photo, the workstation is **drawn in CSS** — which turned out
+better than a photo would have been, because the screen becomes a live region.
+It renders a real published piece through the real template component. The
+container-query sizing from the editor preview made this exact at any scale.
+
+---
+
+## Workflows
+
+### Deploy
+
+`main` is connected to the Stripe-provisioned Vercel project, so **every push
+redeploys**. There is no separate deploy step.
+
+```bash
+git push origin main          # production deploy
+vercel deploy --prod --token "$VERCEL_TOKEN"   # manual, same target
+```
+
+### Verification
+
+Nothing here was reported working on the strength of a build passing. Each
+claim was checked against the deployed app with a headless browser:
+
+```bash
+npx playwright install chromium
+# drive real flows: sign up, fill the editor, publish, open the live URL
+```
+
+That loop is what caught the **Callback URL mismatch** (Auth0 rejecting the
+Vercel callback) and a colophon colliding with body text on the landing-page
+screen. Both look fine in a build log and are obvious the moment you render.
+
+One false alarm worth recording: a logout assertion failed because the test
+matched `"Sign in to write"` case-sensitively while CSS uppercases it. The test
+was wrong, not the app — worth confirming which before chasing a fix.
+
+### Database
+
+No migration framework. `schema.sql` is applied directly over the connection
+string, so the Neon web console is never needed:
+
+```bash
+node scripts/seed.mjs         # seeds the demo pieces, safe to re-run
+```
+
+### Editing
+
+The agent worked in short-lived git worktrees merged into `main` as it went, so
+the history stays linear and nothing half-finished ever sat in the checkout.
+One trap: a worktree created before the scaffold was committed had no
+`package.json`, so `npm install` silently resolved to the parent directory and
+Next inferred the wrong workspace root. Worktrees need the dependency manifest
+committed first.
+
+---
+
+## The original spec prompt
+
+Given to the agent after Stripe Projects was configured, so it could read the
+initialized services rather than ask for credentials.
 
 <details>
 <summary>Expand</summary>
@@ -279,16 +403,20 @@ beyond what's needed; hand-write the type styles — the design is the whole poi
 
 ```
 app/
-  page.tsx                 landing
+  page.tsx                 landing — the workstation
+  page.module.css          landing only
+  shell.module.css         chrome shared by /write's gate and the 404
   write/                   editor (client) + publish server action
   published/[slug]/        congrats screen with the live URL
   p/[slug]/                the public piece — the product
   fonts.ts, globals.css    type stack + app chrome
-components/templates/
-  Broadsheet.tsx  Reader.tsx  Verse.tsx   one CSS module each
-  index.tsx                              picks a template, sets the container
+components/
+  Workstation.tsx          the CSS-drawn LCD; children render on the glass
+  templates/
+    Broadsheet.tsx  Reader.tsx  Verse.tsx   one CSS module each
+    index.tsx                              picks a template, sets the container
 lib/
   auth0.ts  db.ts  slug.ts  format.ts  types.ts
 scripts/seed.mjs           seeds the demo pieces
-schema.sql                 paste into the Neon console
+schema.sql                 the one table
 ```
