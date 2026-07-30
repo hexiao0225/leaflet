@@ -2,10 +2,17 @@ import Link from "next/link";
 import Workstation from "@/components/Workstation";
 import PieceView from "@/components/templates";
 import { getAuthor, isAuthConfigured } from "@/lib/auth0";
-import { getFeaturedPiece } from "@/lib/db";
+import { getFeaturedPiece, listPiecesBySlugs } from "@/lib/db";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
+
+/** Curated, in menu order. Titles are read from the database. */
+const SELECTED_WORK = [
+  "early-summer-kjwf4",
+  "ray-ray-6dh94",
+  "the-cartographers-daughter",
+];
 
 export default async function Landing() {
   const authConfigured = isAuthConfigured();
@@ -13,6 +20,7 @@ export default async function Landing() {
 
   // The screen shows a real published piece, rendered by the real template.
   const featured = await getFeaturedPiece().catch(() => null);
+  const selected = await listPiecesBySlugs(SELECTED_WORK).catch(() => []);
 
   return (
     <main className={styles.page}>
@@ -40,10 +48,21 @@ export default async function Landing() {
               Sign In to Write
             </Link>
           )}
-          {featured && (
-            <Link href={`/p/${featured.slug}`} className={styles.navItem}>
-              Selected Work
-            </Link>
+          {selected.length > 0 && (
+            <details className={styles.submenu} open>
+              <summary className={styles.navItem}>Selected Work</summary>
+              <div className={styles.submenuItems}>
+                {selected.map((piece) => (
+                  <Link
+                    key={piece.slug}
+                    href={`/p/${piece.slug}`}
+                    className={styles.submenuItem}
+                  >
+                    {piece.title}
+                  </Link>
+                ))}
+              </div>
+            </details>
           )}
           <span className={styles.navTemplates}>Broadsheet · Reader · Verse</span>
         </nav>

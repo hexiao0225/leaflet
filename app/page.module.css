@@ -63,6 +63,44 @@
   color: var(--ink);
 }
 
+/* Native disclosure — a real submenu with no JavaScript. */
+.submenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.submenu > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.submenu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.submenu > summary:hover {
+  color: var(--ink);
+}
+
+.submenuItems {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.85rem;
+}
+
+.submenuItem {
+  font-size: 0.8125rem;
+  line-height: 1.32;
+  color: var(--muted);
+  text-decoration: none;
+  width: fit-content;
+  transition: color 0.12s ease;
+}
+
+.submenuItem:hover {
+  color: var(--ink);
+}
+
 /* Reads as a colophon on desktop; just clutter on a phone. */
 .navTemplates {
   composes: navItem;

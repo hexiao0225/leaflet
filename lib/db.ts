@@ -43,6 +43,22 @@ export async function listRecentPieces(limit = 6): Promise<Piece[]> {
 }
 
 /**
+ * Curated pieces for the landing page's Selected Work menu, returned in the
+ * order the slugs are given. Titles come from the database so the menu can't
+ * drift; anything deleted simply drops out.
+ */
+export async function listPiecesBySlugs(slugs: string[]): Promise<Piece[]> {
+  if (slugs.length === 0) return [];
+  const sql = connection();
+  const rows = (await sql`
+    select * from pieces where slug = any(${slugs})
+  `) as Piece[];
+  return slugs
+    .map((slug) => rows.find((row) => row.slug === slug))
+    .filter((row): row is Piece => Boolean(row));
+}
+
+/**
  * The piece shown on the landing page's screen. Prefers a light template —
  * a dark page behind the glass loses the lit-monitor effect.
  */
