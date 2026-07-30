@@ -24,9 +24,12 @@ for (const file of [".env.local", ".env"]) {
   }
 }
 
-if (!process.env.DATABASE_URL) {
+const DATABASE_URL =
+  process.env.DATABASE_URL || process.env.NEON_POSTGRES_CONNECTION_STRING;
+
+if (!DATABASE_URL) {
   console.error(
-    "DATABASE_URL is not set. Run `stripe projects add neon/postgres` first."
+    "No database URL set. Run `stripe projects add neon/postgres` first."
   );
   process.exit(1);
 }
@@ -93,7 +96,7 @@ So the marks stay. The book is now two books, bound together and disagreeing, an
   },
 ];
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = neon(DATABASE_URL);
 
 const existing = await sql`select 1 from pieces limit 0`.catch((error) => {
   console.error(

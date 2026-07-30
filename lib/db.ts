@@ -2,10 +2,13 @@ import { neon } from "@neondatabase/serverless";
 import type { Piece } from "./types";
 
 function connection() {
-  const url = process.env.DATABASE_URL;
+  // Stripe Projects writes NEON_POSTGRES_CONNECTION_STRING; DATABASE_URL is
+  // accepted too so the app runs against any plain Postgres URL.
+  const url =
+    process.env.DATABASE_URL || process.env.NEON_POSTGRES_CONNECTION_STRING;
   if (!url) {
     throw new Error(
-      "DATABASE_URL is not set. Run `stripe projects add neon/postgres`."
+      "No database URL set. Run `stripe projects add neon/postgres`."
     );
   }
   return neon(url);
