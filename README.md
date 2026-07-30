@@ -7,9 +7,6 @@ Built with Stripe Projects (Auth0 + Neon + Vercel) on Next.js.
 
 ### → [**leaflet-puce.vercel.app**](https://leaflet-puce.vercel.app)
 
-- **Repo:** https://github.com/hexiao0225/leaflet
-- **Demo login:** `hello@leaflet.press` / `LeafletDemo2026!`
-
 [![Leaflet landing page](docs/landing.png)](https://leaflet-puce.vercel.app)
 
 Three pieces are already published, one per template:
@@ -34,23 +31,43 @@ mock-up. Switching the radio redraws it instantly.
 
 ![Editor with the verse template selected](docs/editor-verse.png)
 
-Same piece, `reader` template, with the optional image URL filled in:
+Same piece, a different template, with the optional image URL filled in:
 
 ![Editor with the reader template and an image](docs/editor-reader-image.png)
 
-**Publish.** The slug is generated from the title plus a short random suffix,
-so two pieces can share a title.
+A long poem, set as continuous text with indented first lines:
+
+![Editor showing a long poem](docs/editor-early-summer.png)
+
+**Publish.** The slug comes from the title plus a short random suffix, so two
+pieces can share a title.
 
 ![Congrats screen showing the live URL](docs/published-early-summer.png)
 
 **The page.** Public, no auth, nothing on it but the piece.
 
-![A published piece in the reader template](docs/published-ray-ray.png)
+![A published piece](docs/published-ray-ray.png)
 
-Another one, in the editor — `reader` handles a long poem as continuous
-setting with indented first lines:
+Each template previewed side by side:
 
-![Editor showing a long poem in the reader template](docs/editor-early-summer.png)
+| verse | broadsheet | reader |
+|---|---|---|
+| ![verse](docs/template-verse.png) | ![broadsheet](docs/template-broadsheet.png) | ![reader](docs/template-reader.png) |
+
+### Design references
+
+The type system was drawn against these — the metadata row under the image on
+[sam-evers.com](https://sam-evers.com), and the mono-caption voice of
+[andrescasas.cl](https://andrescasas.cl):
+
+| sam-evers.com | andrescasas.cl |
+|---|---|
+| ![sam-evers.com](docs/ref-sam-evers.png) | ![andrescasas.cl](docs/ref-andrescasas.png) |
+
+*Reference screenshots, credited to their authors — the moodboard this was
+built against, not anything belonging to this project.*
+
+---
 
 ## What it is
 
@@ -65,109 +82,53 @@ three typographic templates, publish → live URL.
 piece, image file upload (URL field only), colour/font customisation,
 AI-generated templates.
 
----
-
-## The three templates
-
-The differentiator. This is a typography project — the templates are the demo.
-Each is a distinct point in one coherent indie-press / art-book space: pure
-colour and type, one idea per page, a serif-display voice contrasted with a
-monospace-metadata voice.
-
-| Template | Look | Best for |
-|---|---|---|
-| **broadsheet** | Cream page, Instrument Serif set edge-to-edge (~34px / 1.35), huge title, mono colophon row pinned bottom reading `TYPE · TEMPLATE · DATE`. Accent oxblood `#b3311f`. | fiction, review |
-| **reader** | Near-black `#0a0a0a`, a bordered sheet floating on the void, one 46ch column of Inter at ~19px in warm off-white, italic serif title, continuous setting with indented first lines, two tiny Space Mono footnotes flush-right. Accent muted gold `#b99a5b`. | review, essay |
-| **verse** | Poster energy on near-white. Oversized Instrument Serif title, roman first half + italic second half. Body centred with `white-space: pre-wrap` so line breaks survive exactly. Accent electric blue `#1c39ff`. | poetry |
-
-References: madonnapopstar12 and sam-evers (broadsheet), andrewculp (reader),
-sachakalfon and becoming.press (verse).
-
-Two of the sites the type system was drawn from — the metadata row under the
-image on [sam-evers.com](https://sam-evers.com) became broadsheet's colophon,
-and [andrescasas.cl](https://andrescasas.cl) set the mono-caption voice:
-
-| sam-evers.com | andrescasas.cl |
-|---|---|
-| ![sam-evers.com](docs/ref-sam-evers.png) | ![andrescasas.cl](docs/ref-andrescasas.png) |
-
-*Reference screenshots, credited to their authors — included as the moodboard
-this design was built against, not as anything belonging to this project.*
-
-The editor, with the live preview showing each template in turn:
-
-| verse | broadsheet | reader |
-|---|---|---|
-| ![verse](docs/template-verse.png) | ![broadsheet](docs/template-broadsheet.png) | ![reader](docs/template-reader.png) |
-
-**Type stack**, all via `next/font/google`: Instrument Serif (display),
-Inter (grotesk), Space Mono (metadata).
-
-### One detail worth pointing at
-
-The templates size themselves in **container-query units (`cqw`)**, not
-viewport units. The same CSS therefore drives both the full-screen published
-page and the editor's live-preview panel, and the preview is a true
-proportional miniature rather than a squashed approximation. No duplicated
-stylesheet, no transform hacks.
-
----
-
-## Data model
-
-One table. Create it by pasting [`schema.sql`](./schema.sql) into the Neon web
-console SQL editor — no migration framework.
-
-```sql
-create table pieces (
-  id uuid primary key default gen_random_uuid(),
-  user_id text not null,          -- Auth0 sub
-  title text not null,
-  type text not null,             -- 'poem' | 'fiction' | 'review'
-  template text not null,         -- 'broadsheet' | 'reader' | 'verse'
-  body text not null,
-  image_url text,                 -- optional, one image max
-  slug text unique not null,
-  created_at timestamptz default now()
-);
-```
-
-> The original runbook sketched the templates as
-> `'manuscript' | 'brutalist' | 'verse'` in the SQL while describing them as
-> broadsheet / reader / verse in the design section. The design names won —
-> they are what the code and the CHECK constraint use.
-
 ## Routes
 
 | Route | Auth | What |
 |---|---|---|
-| `/` | public | Landing. One line about the product, sign-in. |
+| `/` | public | Landing. |
 | `/write` | gated | Editor: title, type, template, body, optional image URL + live preview. |
 | `/published/[slug]` | public | Congrats screen with the live URL. |
-| `/p/[slug]` | **public** | The piece, full screen, in its template. This page is the product. |
+| `/p/[slug]` | **public** | The piece, full screen. This page is the product. |
 | `/auth/login`, `/auth/logout`, `/auth/callback` | — | Mounted by the Auth0 SDK middleware. |
 
-## Local development
+---
+
+## Running it locally
 
 ```bash
+git clone https://github.com/hexiao0225/leaflet.git
+cd leaflet
 npm install
-npm run dev
+stripe projects env --pull    # writes .env
+npm run dev                   # http://localhost:3000
 ```
 
-Needs a `.env` — run `stripe projects env --pull` to fetch it. Without it the
-app still boots: the landing page renders and tells you what is missing, which
-is what let it go live on Vercel in the first half hour.
+See [`.env.example`](./.env.example) for the variables involved. Without `.env`
+the app still boots — the landing page renders and tells you what is missing,
+which is what let it go live on Vercel in the first half hour.
 
-To open the editor without Auth0 (documented break-glass for the demo), set:
+Create the one table by running [`schema.sql`](./schema.sql) against your
+database, then seed the demo pieces:
+
+```bash
+node scripts/seed.mjs         # safe to re-run
+```
+
+To open the editor without Auth0 (break-glass for a demo), set:
 
 ```bash
 LEAFLET_DEMO_USER="Your Name"
 ```
 
-Seed the demo pieces once the database URL is set:
+### Deploying
+
+`main` is connected to the Stripe-provisioned Vercel project, so **every push
+redeploys**. There is no separate deploy step.
 
 ```bash
-node scripts/seed.mjs
+git push origin main                            # production deploy
+vercel deploy --prod --token "$VERCEL_TOKEN"    # manual, same target
 ```
 
 ---
@@ -188,6 +149,14 @@ stripe projects add auth0/client      # AUTH0_* env vars
 stripe projects add neon/postgres     # NEON_POSTGRES_* env vars
 stripe projects add vercel/project    # VERCEL_TOKEN + project
 ```
+
+Providers available include Vercel, Auth0, Neon, Agentmail, BrowserBase,
+ElevenLabs. For anything not listed, use its API directly and set env vars.
+
+Provisioning Neon, straight after Auth0 wrote its three credentials into `.env`
+and the vault:
+
+![stripe projects add neon/postgres](docs/stripe-projects-neon.png)
 
 ### Four things the CLI does not do for you
 
@@ -230,14 +199,6 @@ so pushes redeploy, and deploy:
 vercel deploy --prod --token "$VERCEL_TOKEN"
 ```
 
-Providers available include Vercel, Auth0, Neon, Agentmail, BrowserBase,
-ElevenLabs. For anything not listed, use its API directly and set env vars.
-
-Provisioning Neon, straight after Auth0 wrote its three credentials into `.env`
-and the vault:
-
-![stripe projects add neon/postgres](docs/stripe-projects-neon.png)
-
 ### Plumbing notes
 
 **Auth0** — `@auth0/nextjs-auth0` v4. The SDK's `Auth0Client` is constructed
@@ -246,200 +207,13 @@ before the `AUTH0_*` vars exist. `middleware.ts` mounts `/auth/login`,
 `/auth/logout` and `/auth/callback`; login and logout are plain links. Nothing
 hand-rolled.
 
-**Neon** — `@neondatabase/serverless` against the connection string. All reads and
-writes live in server actions / server components ([`lib/db.ts`](./lib/db.ts)).
+**Neon** — `@neondatabase/serverless` against the connection string. All reads
+and writes live in server actions / server components
+([`lib/db.ts`](./lib/db.ts)).
 
 **Vercel** — the Stripe-provisioned Vercel project (`hexiao0225-stripe/leaflet`)
 is connected to this GitHub repo, so every push to `main` redeploys. Deploys use
 the `VERCEL_TOKEN` that Stripe Projects wrote.
-
----
-
-## How this was built
-
-Leaflet was built by an agent (Claude Code) driven by the prompt sequence below.
-Each prompt is given verbatim or lightly condensed, with what it actually
-produced. This is the honest record, including the parts that went sideways.
-
-### 1 — Kick off
-
-> `new hackathon project in a new git repo:` *(followed by the full runbook —
-> scope decision, MVP, data model, template specs, time budget, CLI
-> reference)*. Attached: three reference screenshots — madonnapopstar12,
-> becoming.press, andrewculp.
-
-Produced: blank git repo + first commit *before any code* (a rule requirement),
-Next.js scaffold, the three templates, editor, publish action, public route.
-Live on Vercel roughly 30 minutes in, before any credentials existed — the app
-was written to boot without them and say what was missing.
-
-The three screenshots mapped one-to-one onto the three templates, which is why
-the templates read as a family rather than three unrelated designs.
-
-### 2 — Orientation
-
-> `which git repo and local folder you are on? and what are all the commands i
-> need to run`
-
-Worth doing early. The answer surfaced that the Stripe CLI on the machine was
-v1.25 with **API keys expired 2025-06-27**, which is why
-`stripe plugin install projects` was 401-ing. Every `stripe` subcommand
-authenticates before doing anything, so `stripe login` had to come first.
-
-### 3 — Relocate
-
-> `actually I want to put the project under my code folder. can you do the
-> moving?`
-
-Moved `~/projects/leaflet` → `~/code/leaflet`. Verified git remote, Vercel
-link, and a clean rebuild from the new path all survived.
-
-### 4 — Provision
-
-> *(pasted the `api_key_expired` error)* … then
-> `i have installed all those needed stripe projects, lets continue building
-> out the whole product`
-
-This was the longest phase, and almost none of it was app code — see
-[Four things the CLI does not do for you](#four-things-the-cli-does-not-do-for-you).
-Provisioning three services is not the same as having a working app.
-
-### 5 — Ship
-
-> `this is great! please commit all the code and merge to main. We will then go
-> into the refine phase`
-
-Already done — work was merged to `main` continuously rather than accumulating
-on a branch.
-
-### 6 — Rebrand
-
-> `for the actual site leaflet, i want a design rebrand. Let's use this style:
-> [willhandley.net screenshot] for the landing page. you can replace the
-> content from the computer screen with actual content`
-
-The reference is a photograph of an LCD on a rack server. Rather than reuse
-someone else's photo, the workstation is **drawn in CSS** — which turned out
-better than a photo would have been, because the screen becomes a live region.
-It renders a real published piece through the real template component. The
-container-query sizing from the editor preview made this exact at any scale.
-
----
-
-## Workflows
-
-### Deploy
-
-`main` is connected to the Stripe-provisioned Vercel project, so **every push
-redeploys**. There is no separate deploy step.
-
-```bash
-git push origin main          # production deploy
-vercel deploy --prod --token "$VERCEL_TOKEN"   # manual, same target
-```
-
-### Verification
-
-Nothing here was reported working on the strength of a build passing. Each
-claim was checked against the deployed app with a headless browser:
-
-```bash
-npx playwright install chromium
-# drive real flows: sign up, fill the editor, publish, open the live URL
-```
-
-That loop is what caught the **Callback URL mismatch** (Auth0 rejecting the
-Vercel callback) and a colophon colliding with body text on the landing-page
-screen. Both look fine in a build log and are obvious the moment you render.
-
-One false alarm worth recording: a logout assertion failed because the test
-matched `"Sign in to write"` case-sensitively while CSS uppercases it. The test
-was wrong, not the app — worth confirming which before chasing a fix.
-
-### Database
-
-No migration framework. `schema.sql` is applied directly over the connection
-string, so the Neon web console is never needed:
-
-```bash
-node scripts/seed.mjs         # seeds the demo pieces, safe to re-run
-```
-
-### Editing
-
-The agent worked in short-lived git worktrees merged into `main` as it went, so
-the history stays linear and nothing half-finished ever sat in the checkout.
-One trap: a worktree created before the scaffold was committed had no
-`package.json`, so `npm install` silently resolved to the parent directory and
-Next inferred the wrong workspace root. Worktrees need the dependency manifest
-committed first.
-
----
-
-## The original spec prompt
-
-Given to the agent after Stripe Projects was configured, so it could read the
-initialized services rather than ask for credentials.
-
-<details>
-<summary>Expand</summary>
-
-```
-Build a Next.js (App Router, TypeScript) app called "Leaflet" — an artistic
-site builder for writers to publish a single piece of writing, each at its own
-dedicated URL, with a pure-typography aesthetic (think Cargo: color, type, and
-whitespace only).
-
-Use the already-initialized Stripe Projects services — read the credentials
-from .env, do not ask me for them:
-- Auth0 (@auth0/nextjs-auth0) for login. Gate the editor behind auth.
-- Neon Postgres (DATABASE_URL) via @neondatabase/serverless for storage.
-- Deploy target is Vercel (the app is already linked).
-
-Data model — one table `pieces`:
-  id uuid pk, user_id text (Auth0 sub), title text, type text
-  ('poem'|'fiction'|'review'), template text
-  ('broadsheet'|'reader'|'verse'), body text, image_url text nullable,
-  slug text unique, created_at timestamptz default now().
-
-Pages/flow:
-1. Landing page: one line about the product + "Sign in to write" (Auth0 login).
-2. /write (auth-gated): a form — title input, type select, template select
-   (3 options), a large textarea for the body, and an optional image URL field.
-   Live preview beside the form rendered in the selected template.
-3. Publish = a server action that inserts the row, generates a unique slug from
-   the title plus a short random suffix, and redirects to a congrats screen
-   showing the live URL (/p/<slug>) with a "View your page" button.
-4. /p/[slug] (public, no auth): fetches the piece and renders it full-screen in
-   its chosen template. This page is the product — make the typography
-   exceptional.
-
-Aesthetic target: indie-press / art-book typography (Cargo-like) — pure color
-and type, one idea per page, heavy restraint, a serif-display voice contrasted
-with a monospace-metadata voice.
-
-Fonts via next/font/google: Instrument Serif (display serif), Inter (grotesk),
-Space Mono (mono). Load all three.
-
-Three templates as React components, each a distinct typographic system, one
-accent color each, generous whitespace:
-- broadsheet: cream page, large Instrument Serif body edge-to-edge (~34px,
-  line-height 1.35), huge title, and a monospace colophon row pinned at the
-  bottom reading "TYPE · TEMPLATE · DATE". Best for fiction/review.
-- reader: near-black page (#0a0a0a), single narrow centered column (~46ch) of
-  Inter (~19px) in warm off-white, italic serif title, a couple of tiny
-  Space Mono footnote lines flush-right near the bottom. Best for essays.
-- verse: poster energy — oversized Instrument Serif title mixing roman + italic,
-  one accent color (electric blue or a single warm red), body centered with
-  white-space: pre-wrap so line breaks are preserved exactly, generous leading.
-  Best for poetry.
-
-Keep it minimal and shippable. Don't build image upload (URL field only),
-customization, per-piece Vercel deploys, or the AI template. No CSS framework
-beyond what's needed; hand-write the type styles — the design is the whole point.
-```
-
-</details>
 
 ---
 
@@ -456,11 +230,15 @@ app/
   fonts.ts, globals.css    type stack + app chrome
 components/
   Workstation.tsx          the CSS-drawn LCD; children render on the glass
-  templates/
-    Broadsheet.tsx  Reader.tsx  Verse.tsx   one CSS module each
-    index.tsx                              picks a template, sets the container
+  templates/               one component + one CSS module each
 lib/
   auth0.ts  db.ts  slug.ts  format.ts  types.ts
 scripts/seed.mjs           seeds the demo pieces
 schema.sql                 the one table
 ```
+
+## Credits
+
+The writing in `scripts/seed.mjs` is original, included as demo content. The
+reference screenshots in `docs/ref-*.png` belong to the sites credited above
+and are included only as the moodboard this design was built against.
