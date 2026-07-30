@@ -5,8 +5,15 @@ typography, Cargo-style. **One piece of writing → one dedicated URL.**
 
 Built with Stripe Projects (Auth0 + Neon + Vercel) on Next.js.
 
-- **Live:** https://leaflet-six-sooty.vercel.app
+- **Live:** https://leaflet-puce.vercel.app
 - **Repo:** https://github.com/hexiao0225/leaflet
+- **Demo login:** `hello@leaflet.press` / `LeafletDemo2026!`
+
+Three pieces are already published, one per template:
+
+- [Inventory of a Borrowed Room](https://leaflet-puce.vercel.app/p/inventory-of-a-borrowed-room) — poem, **verse**
+- [The Cartographer's Daughter](https://leaflet-puce.vercel.app/p/the-cartographers-daughter) — fiction, **broadsheet**
+- [On Rereading a Book You Have Already Underlined](https://leaflet-puce.vercel.app/p/on-rereading-a-book-you-have-already-underlined) — review, **reader**
 
 ---
 
@@ -108,10 +115,9 @@ npm install
 npm run dev
 ```
 
-Needs a `.env` with `DATABASE_URL` and the `AUTH0_*` vars (both written by the
-Stripe Projects CLI — see below). Without them the app still boots: the landing
-page renders and tells you what is missing, which is what let it go live on
-Vercel in the first half hour.
+Needs a `.env` — run `stripe projects env --pull` to fetch it. Without it the
+app still boots: the landing page renders and tells you what is missing, which
+is what let it go live on Vercel in the first half hour.
 
 To open the editor without Auth0 (documented break-glass for the demo), set:
 
@@ -119,7 +125,7 @@ To open the editor without Auth0 (documented break-glass for the demo), set:
 LEAFLET_DEMO_USER="Your Name"
 ```
 
-Seed the demo pieces once `DATABASE_URL` is set:
+Seed the demo pieces once the database URL is set:
 
 ```bash
 node scripts/seed.mjs
@@ -140,8 +146,49 @@ stripe projects init          # writes .env, .gitignore, settings, cloud skills
 
 # Add services (writes credentials into .env)
 stripe projects add auth0/client      # AUTH0_* env vars
-stripe projects add neon/postgres     # DATABASE_URL
-stripe projects add vercel/results    # Vercel deploy target
+stripe projects add neon/postgres     # NEON_POSTGRES_* env vars
+stripe projects add vercel/project    # VERCEL_TOKEN + project
+```
+
+### Four things the CLI does not do for you
+
+Provisioning the three services is not quite enough to make the app work. In
+order:
+
+**1. Auth0 v4 needs two vars Stripe does not write.** `AUTH0_SECRET` (session
+encryption) and `APP_BASE_URL`. Store them as project variables so they land in
+`.env` on every pull:
+
+```bash
+stripe projects variables set auth0-secret  --env-key AUTH0_SECRET  --value "$(openssl rand -hex 32)"
+stripe projects variables set app-base-url  --env-key APP_BASE_URL  --value "https://leaflet-puce.vercel.app"
+stripe projects env --pull
+```
+
+**2. The database URL is called something else.** Stripe writes
+`NEON_POSTGRES_CONNECTION_STRING`, not `DATABASE_URL`. `lib/db.ts` accepts
+either.
+
+**3. Auth0 callback URLs are not registered.** Out of the box a deployed login
+fails with **Callback URL mismatch**. Fix it through the CLI, not the dashboard:
+
+```bash
+stripe projects update auth0-client auth0/client --config '{
+  "callbacks":          ["https://leaflet-puce.vercel.app/auth/callback", "http://localhost:3000/auth/callback"],
+  "allowed_logout_urls":["https://leaflet-puce.vercel.app", "http://localhost:3000"],
+  "web_origins":        ["https://leaflet-puce.vercel.app", "http://localhost:3000"]
+}' -y
+```
+
+This does **not** rotate the client credentials, so no redeploy is needed for
+the secret — only for the URLs.
+
+**4. The provisioned Vercel project is empty.** It has no deployment, no
+framework, and no git connection. Push the env vars to it, link it to the repo
+so pushes redeploy, and deploy:
+
+```bash
+vercel deploy --prod --token "$VERCEL_TOKEN"
 ```
 
 Providers available include Vercel, Auth0, Neon, Agentmail, BrowserBase,
@@ -155,11 +202,12 @@ before the `AUTH0_*` vars exist. `middleware.ts` mounts `/auth/login`,
 `/auth/logout` and `/auth/callback`; login and logout are plain links. Nothing
 hand-rolled.
 
-**Neon** — `@neondatabase/serverless` against `DATABASE_URL`. All reads and
+**Neon** — `@neondatabase/serverless` against the connection string. All reads and
 writes live in server actions / server components ([`lib/db.ts`](./lib/db.ts)).
 
-**Vercel** — the Vercel project is connected to this GitHub repo, so every push
-to `main` redeploys. "Export to Vercel" was solved in the first half hour.
+**Vercel** — the Stripe-provisioned Vercel project (`hexiao0225-stripe/leaflet`)
+is connected to this GitHub repo, so every push to `main` redeploys. Deploys use
+the `VERCEL_TOKEN` that Stripe Projects wrote.
 
 ---
 
