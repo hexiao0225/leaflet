@@ -11,9 +11,13 @@ export default function Workstation({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.stage} aria-hidden="true">
+    // The hardware is decorative, but the glass holds real content and a real
+    // link — so aria-hidden goes on the casing, never the screen.
+    <div className={styles.stage}>
       <div className={styles.monitor}>
-        <span className={styles.brandTop}>FLATRON L1715S</span>
+        <span className={styles.brandTop} aria-hidden="true">
+          FLATRON L1715S
+        </span>
 
         <div className={styles.bezel}>
           <div className={styles.screen}>
@@ -21,7 +25,7 @@ export default function Workstation({
           </div>
         </div>
 
-        <div className={styles.chin}>
+        <div className={styles.chin} aria-hidden="true">
           <span className={styles.logo}>LG</span>
           <span className={styles.buttons}>
             <i />
@@ -32,10 +36,10 @@ export default function Workstation({
         </div>
       </div>
 
-      <div className={styles.neck} />
-      <div className={styles.base} />
+      <div className={styles.neck} aria-hidden="true" />
+      <div className={styles.base} aria-hidden="true" />
 
-      <div className={styles.server}>
+      <div className={styles.server} aria-hidden="true">
         <div className={styles.lid} />
         <div className={styles.face}>
           <div className={styles.slots}>
@@ -67,7 +71,7 @@ export default function Workstation({
         </div>
       </div>
 
-      <div className={styles.cables}>
+      <div className={styles.cables} aria-hidden="true">
         <i style={{ left: "31%", rotate: "4deg" }} />
         <i style={{ left: "58%", rotate: "-3deg" }} />
         <i style={{ left: "66%", rotate: "6deg" }} />

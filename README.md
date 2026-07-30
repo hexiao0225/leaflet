@@ -11,12 +11,12 @@ Built with Stripe Projects (Auth0 + Neon + Vercel) on Next.js.
 
 ### Selected work
 
+Writing by [Xiao He](https://www.xiaohe.studio/about). Pick one from the
+landing page's menu and it renders on the monitor in place.
+
 - [Flying Kite](https://leaflet-puce.vercel.app/p/flying-kite-77vnv) — fiction, **broadsheet**
 - [Ray Ray](https://leaflet-puce.vercel.app/p/ray-ray-6dh94) — review, **reader**
 - [Early Summer](https://leaflet-puce.vercel.app/p/early-summer-kjwf4) — poem, **reader**
-- [Inventory of a Borrowed Room](https://leaflet-puce.vercel.app/p/inventory-of-a-borrowed-room) — poem, **verse**
-- [The Cartographer's Daughter](https://leaflet-puce.vercel.app/p/the-cartographers-daughter) — fiction, **broadsheet**
-- [On Rereading a Book You Have Already Underlined](https://leaflet-puce.vercel.app/p/on-rereading-a-book-you-have-already-underlined) — review, **reader**
 
 ---
 
