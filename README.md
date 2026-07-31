@@ -58,19 +58,6 @@ Each template previewed side by side:
 |---|---|---|
 | ![verse](docs/template-verse.png) | ![broadsheet](docs/template-broadsheet.png) | ![reader](docs/template-reader.png) |
 
-### Design references
-
-The type system was drawn against these — the metadata row under the image on
-[sam-evers.com](https://sam-evers.com), and the mono-caption voice of
-[andrescasas.cl](https://andrescasas.cl):
-
-| sam-evers.com | andrescasas.cl |
-|---|---|
-| ![sam-evers.com](docs/ref-sam-evers.png) | ![andrescasas.cl](docs/ref-andrescasas.png) |
-
-*Reference screenshots, credited to their authors — the moodboard this was
-built against, not anything belonging to this project.*
-
 ---
 
 ## What it is
@@ -244,5 +231,5 @@ schema.sql                 the one table
 ## Credits
 
 The writing in `scripts/seed.mjs` is original, included as demo content. The
-reference screenshots in `docs/ref-*.png` belong to the sites credited above
-and are included only as the moodboard this design was built against.
+pieces published on the live site are by
+[Xiao He](https://www.xiaohe.studio/about).
