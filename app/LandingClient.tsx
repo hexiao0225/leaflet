@@ -9,6 +9,9 @@ import styles from "./page.module.css";
 
 export type ScreenPiece = PieceDraft & { slug: string };
 
+/** Stripe payment link — the donor chooses the amount. */
+const DONATE_URL = "https://donate.stripe.com/test_28E14n1wna4RadJ9fq6EU00";
+
 export default function LandingClient({
   authConfigured,
   authorName,
@@ -78,16 +81,25 @@ export default function LandingClient({
         </p>
 
         <p className={styles.credit}>
-          Made by{" "}
+          Made by Xiao He,{" "}
           <a
             className={styles.creditLink}
             href="https://www.xiaohe.studio/about"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Xiao He
-          </a>
-          , artist and product engineer based in San Francisco.
+            artist
+          </a>{" "}
+          and{" "}
+          <a
+            className={styles.creditLink}
+            href="https://www.linkedin.com/in/xiaohe0225/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            product engineer
+          </a>{" "}
+          based in San Francisco.
         </p>
       </div>
 
@@ -122,11 +134,14 @@ export default function LandingClient({
       </div>
 
       <div className={styles.railRight}>
-        <p className={styles.pitch}>
-          <strong>Publish a single piece.</strong>
-          Paste a poem, a story, or a review. Choose how it is set. It goes live
-          at its own URL — nothing else on the page.
-        </p>
+        <a
+          className={styles.donate}
+          href={DONATE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Donate
+        </a>
       </div>
     </main>
   );

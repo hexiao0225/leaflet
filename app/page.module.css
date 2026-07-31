@@ -197,8 +197,12 @@
 }
 
 @media (max-width: 60rem) {
+  /* The rail collapses, but Donate has to stay reachable. */
   .railRight {
-    display: none;
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 5;
   }
 }
 
@@ -208,19 +212,18 @@
   line-height: 1.32;
 }
 
-/* What you can actually do here, in the margin. */
-.pitch {
+.donate {
   font-size: 0.8125rem;
-  color: var(--muted);
   line-height: 1.32;
-  max-width: 11rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  width: fit-content;
+  transition: opacity 0.12s ease;
 }
 
-.pitch strong {
-  display: block;
-  font-weight: 400;
-  color: var(--ink);
-  margin-bottom: 0.55rem;
+.donate:hover {
+  opacity: 0.55;
 }
 
 /* ---- what shows on the glass ---- */

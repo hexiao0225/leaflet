@@ -14,7 +14,6 @@ const SELECTED_WORK = [
   "flying-kite-77vnv",
   "on-hamnet-creation-and-humanity-aq75f",
   "ray-ray-6dh94",
-  "early-summer-kjwf4",
 ];
 
 export default async function Landing() {
