@@ -71,7 +71,6 @@ export default function LandingClient({
             </details>
           )}
 
-          <span className={styles.navTemplates}>Broadsheet · Reader · Verse</span>
         </nav>
 
         <p className={styles.railNote}>
@@ -88,7 +87,7 @@ export default function LandingClient({
           >
             Xiao He
           </a>
-          , artist based in San Francisco.
+          , artist and product engineer based in San Francisco.
         </p>
       </div>
 
@@ -114,7 +113,7 @@ export default function LandingClient({
           <div className={styles.screenBody}>
             {active ? (
               // Keyed so switching pieces remounts and scrolls back to the top.
-              <PieceView key={active.slug} piece={active} variant="preview" />
+              <PieceView key={active.slug} piece={active} variant="screen" />
             ) : (
               <p className={styles.blank}>Nothing published yet.</p>
             )}
@@ -123,10 +122,11 @@ export default function LandingClient({
       </div>
 
       <div className={styles.railRight}>
-        <span className={styles.meta}>
-          {authorName ?? "Publication Builder"}
-        </span>
-        <span className={styles.meta}>Auth0 · Neon · Vercel</span>
+        <p className={styles.pitch}>
+          <strong>Publish a single piece.</strong>
+          Paste a poem, a story, or a review. Choose how it is set. It goes live
+          at its own URL — nothing else on the page.
+        </p>
       </div>
     </main>
   );

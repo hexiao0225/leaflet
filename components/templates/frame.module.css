@@ -15,3 +15,9 @@
   height: 100%;
   overflow: hidden;
 }
+
+/* Like preview, but free to grow past the viewport so its container can
+   scroll — used inside the landing page's monitor. */
+.screen {
+  min-height: 100%;
+}

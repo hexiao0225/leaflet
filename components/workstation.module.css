@@ -63,19 +63,17 @@
   flex-direction: column;
 }
 
-/* Scanline + glare passes, purely decorative. */
+/* Scanlines only. No simulated glare — the content should read flat and clean. */
 .screen::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(118deg, rgb(255 255 255 / 0.34) 10%, transparent 34%),
-    repeating-linear-gradient(
-      0deg,
-      rgb(0 0 0 / 0.03) 0 1px,
-      transparent 1px 3px
-    );
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0.022) 0 1px,
+    transparent 1px 3px
+  );
 }
 
 .chin {

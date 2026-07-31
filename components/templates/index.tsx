@@ -15,7 +15,7 @@ export default function PieceView({
   variant = "page",
 }: {
   piece: PieceDraft;
-  variant?: "page" | "preview";
+  variant?: "page" | "preview" | "screen";
 }) {
   const Template = TEMPLATE_COMPONENTS[piece.template] ?? Broadsheet;
   return (

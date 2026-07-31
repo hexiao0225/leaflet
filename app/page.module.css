@@ -120,17 +120,6 @@
   content: "→ ";
 }
 
-/* Reads as a colophon on desktop; just clutter on a phone. */
-.navTemplates {
-  composes: navItem;
-}
-
-@media (max-width: 60rem) {
-  .navTemplates {
-    display: none;
-  }
-}
-
 .railNote {
   font-size: 0.8125rem;
   color: var(--muted);
@@ -138,14 +127,16 @@
   max-width: 11rem;
 }
 
+/* Pinned to the viewport so the credit is on screen no matter what. */
 .credit {
+  position: fixed;
+  left: 1.6rem;
+  bottom: 1.6rem;
+  z-index: 5;
   font-size: 0.8125rem;
   color: var(--muted);
   line-height: 1.32;
   max-width: 11rem;
-  /* Sits at the foot of the rail, like a colophon. */
-  margin-top: auto;
-  padding-bottom: 1.6rem;
 }
 
 .creditLink {
@@ -177,11 +168,10 @@
     display: none;
   }
 
-  /* Keep the credit, but give it its own line rather than the rail's foot. */
   .credit {
-    margin-top: 0;
-    padding-bottom: 0;
-    flex-basis: 100%;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1rem;
     max-width: none;
   }
 }
@@ -216,6 +206,21 @@
   font-size: 0.8125rem;
   color: var(--muted);
   line-height: 1.32;
+}
+
+/* What you can actually do here, in the margin. */
+.pitch {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.32;
+  max-width: 11rem;
+}
+
+.pitch strong {
+  display: block;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.55rem;
 }
 
 /* ---- what shows on the glass ---- */
@@ -261,20 +266,34 @@ a.urlBar:hover {
   border-color: #b9b9b4;
 }
 
+/* The glass scrolls: pieces are read here, not just glimpsed. */
 .screenBody {
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #c6c6c2 transparent;
+  overscroll-behavior: contain;
 }
 
-/* Give the page more height than the glass so it reads as the top of a long
-   document. Without this the template's pinned colophon rides up over the
-   body text. */
 .screenBody > * {
   flex: none;
-  height: 165%;
+}
+
+.screenBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.screenBody::-webkit-scrollbar-thumb {
+  background: #c6c6c2;
+  border-radius: 3px;
+}
+
+.screenBody::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* Fallback when there is nothing published yet. */
